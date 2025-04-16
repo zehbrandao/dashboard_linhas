@@ -77,7 +77,7 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
 
         if coords:
             lons, lats = zip(*coords)
-            fig.add_trace(go.Scattermapbox(
+            fig.add_trace(go.Scattermap(
                 lat=lats,
                 lon=lons,
                 mode="lines",
@@ -91,9 +91,9 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
             ))
 
     fig.update_layout(
-        mapbox_style="carto-positron",
-        mapbox_zoom=12,
-        mapbox_center={"lat": y, "lon": x},
+        map_style="carto-positron",
+        map_zoom=12,
+        map_center={"lat": y, "lon": x},
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         font=dict(
             family="Roboto, Arial, sans-serif",
