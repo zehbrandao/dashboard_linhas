@@ -35,6 +35,9 @@ gdf = gpd.read_file("data/linhas_fiocruz.gpkg")
 gdf = gdf[gdf.is_valid & ~gdf.is_empty]
 x, y = list(gdf.union_all().centroid.coords)[0]
 
+linhas_unicas = sorted(gdf['route_id'].unique())
+versoes_unicas = sorted(gdf['versao'].unique())
+
 # Styling lines
 route_colors = {
     rid: color for rid, color in zip(
@@ -49,9 +52,6 @@ linestyles = {
     'licitada': 'dash',
     'ajustada': 'solid'
 }
-
-linhas_unicas = sorted(gdf['route_id'].unique())
-versoes_unicas = sorted(gdf['versao'].unique())
 
 def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
     fig = go.Figure()
