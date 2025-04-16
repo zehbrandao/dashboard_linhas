@@ -117,7 +117,7 @@ def robots():
 app.title = "Mapa Interativo de Linhas"
 
 app.layout = html.Div([
-    html.H2("🚌 Mapa Interativo de Linhas de Transporte Público", style={"textAlign": "center"}),
+    html.H2("🚌 Linhas de Transporte Corporativo", style={"textAlign": "center"}),
 
     html.Div([
         html.Label("Selecionar Linhas:"),
