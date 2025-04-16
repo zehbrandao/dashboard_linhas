@@ -77,6 +77,7 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
 
 # 🖼️ App Dash
 app = dash.Dash(__name__)
+server = app.server  # 🔧 Necessário para Render rodar com gunicorn
 app.title = "Mapa Interativo de Linhas"
 
 app.layout = html.Div([
