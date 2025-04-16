@@ -1,3 +1,6 @@
+import itertools
+import os
+
 import geopandas as gpd
 from shapely.geometry import LineString, MultiLineString
 import plotly.graph_objects as go
@@ -5,7 +8,6 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.io as pio
 from flask import request, Response, send_from_directory  # 🧩 Novo
-import os
 
 # 👤 Usuário e senha simples (ideal colocar em variáveis de ambiente)
 USERNAME = os.getenv("DASH_USERNAME", "oswaldogcruz")
@@ -33,11 +35,18 @@ gdf = gpd.read_file("data/linhas_fiocruz.gpkg")
 gdf = gdf[gdf.is_valid & ~gdf.is_empty]
 x, y = list(gdf.union_all().centroid.coords)[0]
 
-# Cores por versão
-cores = {
-    'original': '#882255',
-    'licitada': '#332288',
-    'ajustada': '#117733'
+# Styling lines
+route_colors = {
+    rid: color for rid, color in zip(
+        linhas_unicas,
+        ['#1b9e77', '#d95f02', '#7570b3', '#e7298a', '#66a61e', '#e6ab02',
+         '#a6761d', '#666666', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#cab2d6']
+    )
+}
+linestyles = {
+    'original': 'dot',
+    'licitada': 'dash',
+    'ajustada': 'solid'
 }
 
 linhas_unicas = sorted(gdf['route_id'].unique())
@@ -72,8 +81,12 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
                 lon=lons,
                 mode="lines",
                 name=f"Linha {row['route_id']} - {row['versao']}",
-                line=dict(color=cores.get(row['versao'], 'gray'), width=3),
-                hovertext=f"Linha {row['route_id']}<br>Versão: {row['versao']}"
+                line=dict(
+                    color=route_colors.get(row['route_id'], '#999999'),
+                    width=3,
+                    dash=linestyles.get(row['versao'], 'solid')
+                ),
+                hovertext=f"{row['route_id']}<br>Versão: {row['versao']}"
             ))
 
     fig.update_layout(
@@ -87,7 +100,7 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
             color="#333"
         ),
         legend=dict(
-            title="Linhas e Versões",
+            title="s e Versões",
             x=0.01,
             y=0.99,
             bgcolor='rgba(255,255,255,0.7)',
@@ -123,7 +136,7 @@ app.layout = html.Div([
         html.Label("Selecionar Linhas:"),
         dcc.Dropdown(
             id='dropdown_linhas',
-            options=[{'label': f"Linha {linha}", 'value': linha} for linha in linhas_unicas],
+            options=[{'label': f"{linha}", 'value': linha} for linha in linhas_unicas],
             value=linhas_unicas[:2],
             multi=True
         ),
