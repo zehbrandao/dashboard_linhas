@@ -75,12 +75,12 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
 
     return fig
 
-# 🖼️ interactive_map Dash
-interactive_map = dash.Dash(__name__)
-server = interactive_map.server  # 🔧 Necessário para Render rodar com gunicorn
-interactive_map.title = "Mapa Interativo de Linhas"
+# 🖼️ app Dash
+app = dash.Dash(__name__)
+server = app.server  # 🔧 Necessário para Render rodar com gunicorn
+app.title = "Mapa Interativo de Linhas"
 
-interactive_map.layout = html.Div([
+app.layout = html.Div([
     html.H2("🚌 Mapa Interativo de Linhas de Transporte Público", style={"textAlign": "center"}),
 
     html.Div([
@@ -106,7 +106,7 @@ interactive_map.layout = html.Div([
     dcc.Graph(id="mapa_plotly", style={"height": "80vh"})
 ])
 
-@interactive_map.callback(
+@app.callback(
     Output("mapa_plotly", "figure"),
     Input("dropdown_linhas", "value"),
     Input("checklist_versoes", "value")
@@ -115,4 +115,4 @@ def atualizar_mapa(linhas_selecionadas, versoes_selecionadas):
     return gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas)
 
 if __name__ == "__main__":
-    interactive_map.run_server(debug=True, host="0.0.0.0", port=8080)
+    app.run_server(debug=True, host="0.0.0.0", port=8080)
