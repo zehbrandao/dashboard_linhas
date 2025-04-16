@@ -39,8 +39,9 @@ x, y = list(gdf.union_all().centroid.coords)[0]
 route_colors = {
     rid: color for rid, color in zip(
         linhas_unicas,
-        ['#1b9e77', '#d95f02', '#7570b3', '#e7298a', '#66a61e', '#e6ab02',
-         '#a6761d', '#666666', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#cab2d6']
+        ['#332288', '#88CCEE', '#44AA99', '#117733', '#999933',
+         '#DDCC77', '#661100', '#CC6677', '#882255',
+         '#6699CC', '#AA4499', '#3f51b5', '#000000',]
     )
 }
 linestyles = {
