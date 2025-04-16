@@ -8,8 +8,8 @@ from flask import request, Response, send_from_directory  # 🧩 Novo
 import os
 
 # 👤 Usuário e senha simples (ideal colocar em variáveis de ambiente)
-USERNAME = os.getenv("DASH_USERNAME", "admin")
-PASSWORD = os.getenv("DASH_PASSWORD", "senha123")
+USERNAME = os.getenv("DASH_USERNAME", "oswaldogcruz")
+PASSWORD = os.getenv("DASH_PASSWORD", "25051900")
 
 def check_auth(user, pw):
     return user == USERNAME and pw == PASSWORD
@@ -35,9 +35,9 @@ x, y = list(gdf.union_all().centroid.coords)[0]
 
 # Cores por versão
 cores = {
-    'original': 'blue',
-    'licitada': 'green',
-    'ajustada': 'red'
+    'original': '#882255',
+    'licitada': '#332288',
+    'ajustada': '#117733'
 }
 
 linhas_unicas = sorted(gdf['route_id'].unique())
