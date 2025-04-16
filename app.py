@@ -50,7 +50,7 @@ route_colors = {
 linestyles = {
     'original': 1,
     'licitada': 2,
-    'ajustada': 3,
+    'ajustada': 3.5,
 }
 
 def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
@@ -100,7 +100,7 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
             color="#333"
         ),
         legend=dict(
-            title="s e Versões",
+            title="Linhas e Versões",
             x=0.01,
             y=0.99,
             bgcolor='rgba(255,255,255,0.7)',
