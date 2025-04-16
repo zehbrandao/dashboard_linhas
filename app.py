@@ -4,6 +4,29 @@ import plotly.graph_objects as go
 import dash
 from dash import dcc, html, Input, Output
 import plotly.io as pio
+from flask import request, Response, send_from_directory  # 🧩 Novo
+import os
+
+# 👤 Usuário e senha simples (ideal colocar em variáveis de ambiente)
+USERNAME = os.getenv("DASH_USERNAME", "admin")
+PASSWORD = os.getenv("DASH_PASSWORD", "senha123")
+
+def check_auth(user, pw):
+    return user == USERNAME and pw == PASSWORD
+
+def authenticate():
+    return Response(
+        'Autenticação requerida', 401,
+        {'WWW-Authenticate': 'Basic realm="Acesso restrito"'}
+    )
+
+def require_auth(func):
+    def wrapper(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return func(*args, **kwargs)
+    return wrapper
 
 # 📂 Carregar dados GPKG
 gdf = gpd.read_file("data/linhas_fiocruz.gpkg")
@@ -78,6 +101,19 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
 # 🖼️ app Dash
 app = dash.Dash(__name__)
 server = app.server  # 🔧 Necessário para Render rodar com gunicorn
+
+# 🔒 Protege o layout inteiro com autenticação
+@server.before_request
+def protect_routes():
+    auth = request.authorization
+    if not auth or not check_auth(auth.username, auth.password):
+        return authenticate()
+
+# 🛑 Adiciona o robots.txt
+@server.route('/robots.txt')
+def robots():
+    return Response("User-agent: *\nDisallow: /", mimetype="text/plain")
+
 app.title = "Mapa Interativo de Linhas"
 
 app.layout = html.Div([
