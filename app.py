@@ -48,9 +48,9 @@ route_colors = {
     )
 }
 linestyles = {
-    'original': 'dot',
-    'licitada': 'dash',
-    'ajustada': 'solid'
+    'original': 1,
+    'licitada': 2,
+    'ajustada': 3,
 }
 
 def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
@@ -84,8 +84,7 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
                 name=f"Linha {row['route_id']} - {row['versao']}",
                 line=dict(
                     color=route_colors.get(row['route_id'], '#999999'),
-                    width=3,
-                    dash=linestyles.get(row['versao'], 'solid')
+                    width=linestyles.get(row['versao'], 3),
                 ),
                 hovertext=f"{row['route_id']}<br>Versão: {row['versao']}"
             ))
