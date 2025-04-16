@@ -95,7 +95,7 @@ def gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas):
         map_center={"lat": y, "lon": x},
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         font=dict(
-            family="Roboto, Arial, sans-serif",
+            family="Lato, sans-serif",
             size=14,
             color="#333"
         ),
