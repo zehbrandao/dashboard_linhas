@@ -1,1 +1,1 @@
-web: gunicorn app:atualizar_mapa
+web: gunicorn app:app
