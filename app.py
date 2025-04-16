@@ -109,8 +109,7 @@ app.layout = html.Div([
 @app.callback(
     Output("mapa_plotly", "figure"),
     Input("dropdown_linhas", "value"),
-    Input("checklist_versoes", "value")
-)
+    Input("checklist_versoes", "value"))
 def atualizar_mapa(linhas_selecionadas, versoes_selecionadas):
     return gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas)
 
