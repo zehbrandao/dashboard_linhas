@@ -1,1 +1,1 @@
-web: gunicorn dashboard:gunicorn 
+web: gunicorn dashboard:interactive_map 
