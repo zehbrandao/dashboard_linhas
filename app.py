@@ -114,5 +114,5 @@ app.layout = html.Div([
 def atualizar_mapa(linhas_selecionadas, versoes_selecionadas):
     return gerar_figura_plotly(linhas_selecionadas, versoes_selecionadas)
 
-if __name__ == "__main__":
-    app.run_server(debug=True, host="0.0.0.0", port=8080)
+#if __name__ == "__main__":
+#    app.run_server(debug=True, host="0.0.0.0", port=8080)
